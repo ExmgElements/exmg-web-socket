@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>exmg-web-socket demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../polymer/lib/mixins/gesture-event-listeners.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-input/iron-input.html">
+
+    <link rel="import" href="../exmg-web-socket.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <dom-module id="x-connection">
+      <template>
+        <custom-style>
+          <style>
+            pre {
+              background: white;
+              padding: 22px;
+            }
+            input {
+              width: 600px;
+            }
+          </style>
+        </custom-style>
+        <div class="vertical-section-container centered">
+          <h3>exmg-web-socket demo</h3>
+          <div>
+            <iron-input bind-value="{{url}}">
+              <input value="{{value::input}}">
+            </iron-input>
+            <exmg-web-socket
+              id="socket"
+              url="[[url]]"
+              on-close="_onClose"
+              on-error="_onError"
+              on-open="_onOpen"
+              last-response="{{lastResponse}}"
+              last-error="{{lastError}}"
+              verbose>
+            </exmg-web-socket>
+            <!--ul>
+              <li>Response: [[lastResponse]]</li>
+              <li>Error: [[lastError]]</li>
+            </ul-->
+            <button on-tap="_close"> Close </button><button on-tap="_connect"> Connect </button>
+            <hr>
+            <pre><template is="dom-repeat" items="[[history]]" index-as="index">[[item.date]] - [[item.data]]<br></template></pre>
+          </div>
+        </div>
+      </template>
+      <script>
+      window.addEventListener('WebComponentsReady', function() {
+        class XConnection extends Polymer.GestureEventListeners(Polymer.Element) {
+          static get is() {
+            return 'x-connection';
+          }
+          static get properties() {
+            return {
+              lastResponse: {
+                type: Object,
+                observer: '_handleNewData',
+              },
+              history: {
+                type: Array,
+                value: () => [],
+              },
+              url: {
+                type: String,
+                value: 'wss://backend.winview-dev-feature.playtotv.com/api/1/restricted/winview/events',
+              }
+            };
+          }
+          _close() {
+            this.$.socket.close();
+          }
+          _connect() {
+            this.$.socket.connect();
+          }
+          _addLog(d) {
+            this.push('history', {date: new Date(), data: d});
+          }
+          _onError(e) {
+            this._addLog('Connection error', e);
+          }
+          _onOpen() {
+            this._addLog('Connection opened');
+          }
+          _onClose() {
+            this._addLog('Connection closed');
+          }
+          _handleNewData(d) {
+            this._addLog(d);
+          }
+        }
+        window.customElements.define(XConnection.is, XConnection);
+      });
+      </script>
+    </dom-module>
+
+    <x-connection></x-connection>
+
+  </body>
+</html>
