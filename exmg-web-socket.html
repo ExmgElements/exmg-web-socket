@@ -112,10 +112,6 @@
         return this._socket && this._socket.readyState;
       }
 
-      _setSocket(socket) {
-        this._socket = socket;
-      }
-
       fire(eventName, obj) {
         if (this.verbose) {
           console.log('CustomEvent Fired', eventName, {bubbles: this.bubbles, composed: true, detail: obj});
