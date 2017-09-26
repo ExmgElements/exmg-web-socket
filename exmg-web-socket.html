@@ -244,10 +244,10 @@
 
       _removeSocketListeners() {
         if(this._socket) {
-          socket.removeEventListener('error', this._boundOnError);
-          socket.removeEventListener('close', this._boundOnClose);
-          socket.removeEventListener('message', this._boundOnMessage);
-          socket.removeEventListener('open', this._boundOnOpen);
+          this._socket.removeEventListener('error', this._boundOnError);
+          this._socket.removeEventListener('close', this._boundOnClose);
+          this._socket.removeEventListener('message', this._boundOnMessage);
+          this._socket.removeEventListener('open', this._boundOnOpen);
         }
       }
     }
