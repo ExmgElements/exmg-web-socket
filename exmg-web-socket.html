@@ -29,11 +29,25 @@
             value: false
           },
           /*
-           * Interval in which we reconnect after connection error
+           * Interval in which we reconnect after connection error in ms
            */
           autoReconnectInterval: {
             type: Number,
             value: 300,
+          },
+          /*
+           * the increase rate of the reconnect interval
+           */
+          reconnectDecay: {
+            type: Number,
+            value: 1.2,
+          },
+          /*
+           * Max value for reconnect interval in ms
+           */
+          maxReconnectInterval: {
+            type: Number,
+            value: 20000,
           },
           /**
            * By default, exmg-web-socket events do not bubble. Setting this attribute will cause its
@@ -121,6 +135,9 @@
 
       constructor() {
         super();
+
+        this._reconnectAttempts = 0;
+
         this._boundOnError = this._onError.bind(this);
         this._boundOnClose = this._onClose.bind(this);
         this._boundOnMessage = this._onMessage.bind(this);
@@ -169,16 +186,17 @@
       }
 
       _reconnect() {
+        let timeout = Math.round(this.autoReconnectInterval * Math.pow(this.reconnectDecay, this._reconnectAttempts));
         if(this.verbose) {
-          console.log(`Connection retry in ${this.autoReconnectInterval}ms`);
+          console.info(`Connection retry in ${timeout}ms`);
         }
-
         setTimeout(() => {
           if(this.verbose) {
-            console.log('reconnecting...');
+            console.info('reconnecting...');
           }
+          this._reconnectAttempts++;
           this.connect();
-        }, this.autoReconnectInterval);
+        }, Math.min(timeout, this.maxReconnectInterval));
       }
 
       _onError(e) {
@@ -212,6 +230,7 @@
         if (this.verbose) {
           console.info(`Connection open received [readyState: ${this.readyState}]`);
         }
+        this._reconnectAttempts = 0;
         this.fire('open', e);
       }
 
@@ -230,7 +249,9 @@
             console.error(`Error initializing WebSocket from url ${this.url} (${e})`);
           }
           this._setLastError(e);
+          this._reconnect();
         }
+
         this._forceClose = false;
         this._addSocketListeners();
       }
