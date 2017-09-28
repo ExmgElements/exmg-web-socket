@@ -273,7 +273,11 @@
           console.info(`Message received`, e.data);
         }
         if(isJSON(data) && JSON.parse(e.data).hasOwnProperty('pong')) {
+          if (this.verbose) {
+            console.info(`Pong received`);
+          }
           this._lastHeartbeat = Date.now();
+          return;
         }
         this.fire('message', e);
         this._setLastResponse(e.data);
