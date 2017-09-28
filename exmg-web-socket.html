@@ -181,7 +181,7 @@
       disconnectedCallback() {
         super.disconnectedCallback();
         this._removeSocketListeners();
-        _cancelInterval();
+        this._cancelInterval();
       }
 
       send(message) {
