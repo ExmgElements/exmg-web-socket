@@ -17,13 +17,13 @@
     const CLOSING = 2;
     const CLOSED = 3;
 
-    const isStringSet = o => typeof o === 'string' && o !== '';
-    const isJSON = (str) => {
-      if ( /^\s*$/.test(str) ) { return false; }
-      str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
-      str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
-      str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
-      return (/^[\],:{}\s]*$/).test(str);
+    const isStringSet = (o) => typeof o === 'string' && o !== '';
+    const isJSON = (s) => {
+      if ( /^\s*$/.test(s) ) { return false; }
+      s = s.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
+      s = s.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
+      s = s.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
+      return (/^[\],:{}\s]*$/).test(s);
     }
 
     class ExmgWebSocket extends Polymer.Element {
