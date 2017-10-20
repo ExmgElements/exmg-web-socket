@@ -1,16 +1,29 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
+<!--
+`exmg-web-socket` Web socket connection element including connection keep alive
+
+### Keep alive
+The keep alive functionality presumes a ping to be send and a pong returned
+including a timestamp as a value. The Format for this is for the send message is:
+```json
+  {"ping": 1508493238375}
+```
+
+The server should respond:
+```json
+  {"pong": 1508493238385}
+```
+
+@customElement
+@polymer
+@group Exmg Core Elements
+@element exmg-web-socket
+@demo demo/index.html
+-->
+
 <dom-module id="exmg-web-socket">
   <script>
-    /**
-     * `exmg-web-socket`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-
   (function() {
     const CONNECTING = 0;
     const OPEN = 1;
@@ -184,6 +197,9 @@
         this._cancelInterval();
       }
 
+      /*
+      * Method for sending messages
+      */
       send(message) {
         if(!this.socket || this.readyState !== OPEN) {
           console.error(`Error sending message ${message} [readyState: ${this.readyState}]`);
@@ -196,6 +212,9 @@
         this._socket.send(message);
       }
 
+      /*
+      * Close the current active connection with a defaul closeCode of 1000
+      */
       close(closeCode = 1000) {
         if(!this.socket || this.readyState !== OPEN) {
           if(this.verbose) {
@@ -207,6 +226,9 @@
         this.socket.close(closeCode);
       }
 
+      /*
+      * Connect to remote server
+      */
       connect() {
         if(this.socket && this.readyState !== CLOSED) {
           if(this.verbose) {

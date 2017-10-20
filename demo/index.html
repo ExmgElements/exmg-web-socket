@@ -53,6 +53,9 @@
             .vertical-section-container > * > * {
               margin: 0 4px;
             }
+            p{
+              margin: 16px 4px !important;
+            }
           </style>
         </custom-style>
         <div class="vertical-section-container centered">
@@ -63,7 +66,6 @@
             on-error="_onError"
             on-open="_onOpen"
             last-response="{{lastResponse}}"
-            last-error="{{lastError}}"
             reconnect-decay="[[reconnectDecay]]"
             keep-alive-interval="[[keepAliveInterval]]"
             max-reconnect-interval="[[maxReconnectInterval]]"
@@ -95,6 +97,7 @@
           </div>
 
           <div>
+            <p>Note that the keepalive only works on servers that support a ping/pong as specified in the api manual.</p>
             <label>
               <span>Keep Alive Interval</span>
               <iron-input bind-value="{{keepAliveInterval}}">
@@ -151,7 +154,7 @@
               },
               url: {
                 type: String,
-                value: 'wss://backend.winview-dev-feature.playtotv.com/api/1/restricted/winview/events',
+                value: '',
               },
               message: String,
               verbose: {

@@ -1,6 +1,6 @@
 {
   "name": "exmg-web-socket",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Web Sockets Element",
   "authors": [
     "Ex Machina Group"
@@ -19,7 +19,8 @@
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "iron-input": "PolymerElements/iron-input#^2.0.1",
     "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.1",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "iron-component-page": "^3.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"
