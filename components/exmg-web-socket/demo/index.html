@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>exmg-web-socket demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../polymer/lib/mixins/gesture-event-listeners.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-input/iron-input.html">
+    <link rel="import" href="../../paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="../exmg-web-socket.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <dom-module id="x-connection">
+      <template>
+        <custom-style>
+          <style>
+            pre {
+              background: white;
+              padding: 22px;
+            }
+            input {
+              width: 450px;
+              padding: 6px;
+            }
+            input.small{
+              width: 150px;
+            }
+            button {
+              padding: 6px;
+              background: #c7bfbf;
+              color: black;
+              min-width: 100px;
+              border: none;
+            }
+            label > span{
+              display: inline-block;
+              width: 150px;
+            }
+            .vertical-section-container > * {
+              margin: 16px 6px;
+            }
+            .vertical-section-container > * > * {
+              margin: 0 4px;
+            }
+            p{
+              margin: 16px 4px !important;
+            }
+          </style>
+        </custom-style>
+        <div class="vertical-section-container centered">
+          <exmg-web-socket
+            id="socket"
+            url="[[url]]"
+            on-close="_onClose"
+            on-error="_onError"
+            on-open="_onOpen"
+            last-response="{{lastResponse}}"
+            reconnect-decay="[[reconnectDecay]]"
+            keep-alive-interval="[[keepAliveInterval]]"
+            max-reconnect-interval="[[maxReconnectInterval]]"
+            auto-reconnect-interval="[[autoReconnectInterval]]"
+            keep-alive$=[[keepAlive]]
+            verbose$=[[verbose]]>
+          </exmg-web-socket>
+
+          <h3>exmg-web-socket demo</h3>
+          <div>
+            <label>
+              <span>Server Url</span>
+              <iron-input bind-value="{{url}}">
+                <input>
+              </iron-input>
+            </label>
+            <button on-tap="_close">Close</button>
+            <button on-tap="_connect">Connect</button>
+          </div>
+
+          <div>
+            <label>
+              <span>Message</span>
+              <iron-input bind-value="{{message}}">
+                <input >
+              </iron-input>
+            </label>
+            <button on-tap="_send">Send</button>
+          </div>
+
+          <div>
+            <p>Note that the keepalive only works on servers that support a ping/pong as specified in the api manual.</p>
+            <label>
+              <span>Keep Alive Interval</span>
+              <iron-input bind-value="{{keepAliveInterval}}">
+                <input class="small">
+              </iron-input>
+            </label>
+            <paper-checkbox checked="{{keepAlive}}">Keep Alive</paper-checkbox>
+          </div>
+
+          <div>
+            <label>
+              <span>Reconnect Interval</span>
+              <iron-input bind-value="{{autoReconnectInterval}}">
+                <input class="small">
+              </iron-input>
+            </label>
+            <label>
+              <span>Reconnect Decay</span>
+              <iron-input bind-value="{{reconnectDecay}}">
+                <input class="small">
+              </iron-input>
+            </label>
+            <label>
+              <span>Max Reconnect Interval</span>
+              <iron-input bind-value="{{maxReconnectInterval}}">
+                <input class="small">
+              </iron-input>
+            </label>
+          </div>
+
+          <div>
+            <paper-checkbox checked="{{verbose}}">Verbose</paper-checkbox>
+          </div>
+
+          <hr>
+          <pre><template is="dom-repeat" items="[[history]]" index-as="index">[[item.date]] - [[item.data]]<br></template></pre>
+        </div>
+      </template>
+      <script>
+      window.addEventListener('WebComponentsReady', function() {
+        class XConnection extends Polymer.GestureEventListeners(Polymer.Element) {
+          static get is() {
+            return 'x-connection';
+          }
+          static get properties() {
+            return {
+              lastResponse: {
+                type: Object,
+                observer: '_handleNewData',
+              },
+              history: {
+                type: Array,
+                value: () => [],
+              },
+              url: {
+                type: String,
+                value: '',
+              },
+              message: String,
+              verbose: {
+                type: Boolean,
+                value: true,
+              },
+              keepAlive:  {
+                type: Boolean,
+                value: true,
+              },
+              keepAliveInterval: {
+                type: Number,
+                value: 2500,
+              },
+              autoReconnectInterval: {
+                type: Number,
+                value: 300,
+              },
+              reconnectDecay: {
+                type: Number,
+                value: 1.2,
+              },
+              maxReconnectInterval: {
+                type: Number,
+                value: 20000,
+              },
+            };
+          }
+          _close() {
+            this.$.socket.close();
+          }
+          _send() {
+            this.$.socket.send(this.message);
+          }
+          _connect() {
+            this.$.socket.connect();
+          }
+          _addLog(d) {
+            let date = new Intl.DateTimeFormat('en-AU', {
+              hour: 'numeric', minute: 'numeric', second: 'numeric',
+            }).format();
+            this.push('history', {date: date, data: d});
+          }
+          _onError(e) {
+            this._addLog('Connection error', e);
+          }
+          _onOpen(e) {
+            this._addLog(`Connection opened to url ${e.detail.url}`);
+          }
+          _onClose() {
+            this._addLog('Connection closed');
+          }
+          _handleNewData(d) {
+            this._addLog(d);
+          }
+        }
+        window.customElements.define(XConnection.is, XConnection);
+      });
+      </script>
+    </dom-module>
+
+    <x-connection></x-connection>
+
+  </body>
+</html>
