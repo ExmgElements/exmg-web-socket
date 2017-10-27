@@ -3,6 +3,8 @@ exmg-web-socket
 
 WARNING: This element is not compatible with Polymer 1.0
 
+Please visit the [API Documentation and demo](http://ExmgElements.github.io/exmg-web-socket/) page for more information.
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
