@@ -1,36 +1,9 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<!--
-`exmg-web-socket` Web socket connection element including connection keep alive
-
-### Keep alive
-The keep alive functionality presumes a ping to be send and a pong returned
-including a timestamp as a value. The Format for this is for the send message is:
-```json
-  {"ping": 1508493238375}
-```
-
-The server should respond:
-```json
-  {"pong": 1508493238385}
-```
-
-@customElement
-@polymer
-@group Exmg Core Elements
-@element exmg-web-socket
-@demo demo/index.html
--->
-
-<dom-module id="exmg-web-socket">
-  <script>
-  (function() {
-    const CONNECTING = 0;
-    const OPEN = 1;
-    const CLOSING = 2;
-    const CLOSED = 3;
-
-    const isStringSet = (o) => typeof o === 'string' && o !== '';
+<script>
+  'use-strict';
+  {
+    /* eslint-disable */
     const isJSON = (s) => {
       if ( /^\s*$/.test(s) ) { return false; }
       s = s.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
@@ -38,8 +11,31 @@ The server should respond:
       s = s.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
       return (/^[\],:{}\s]*$/).test(s);
     }
-
-    class ExmgWebSocket extends Polymer.Element {
+    /* eslint-enable */
+    /**
+     * The `exmg-web-socket` Web socket connection element including connection keep alive
+     *
+     * ### Keep alive
+     *
+     * The keep alive functionality presumes a ping to be send and a pong returned
+     * including a timestamp as a value. The Format for this is for the send message is:
+     *
+     * ```json
+     *   {"ping": 1508493238375}
+     * ```
+     *
+     *  The server should respond:
+     * ```json
+     *   {"pong": 1508493238385}
+     * ```
+     *
+     * @customElement
+     * @polymer
+     * @group Exmg Core Elements
+     * @element exmg-web-socket
+     * @demo demo/index.html
+     */
+    class WebSocketElement extends Polymer.Element {
       static get is() { return 'exmg-web-socket'; }
       static get properties() {
         return {
@@ -88,10 +84,11 @@ The server should respond:
             observer: '_handleUrlChange'
           },
           /**
-           * Either a single protocol string or an array of protocol strings. These strings are used to indicate sub-protocols,
-           * so that a single server can implement multiple WebSocket sub-protocols (for example, you might want one server to
-           * be able to handle different types of interactions depending on the specified protocol). If you don't specify a
-           * protocol string, an empty string is assumed.
+           * Either a single protocol string or an array of protocol strings. These strings are used to
+           * indicate sub-protocols, so that a single server can implement multiple WebSocket sub-protocols
+           * (for example, you might want one server to be able to handle different types of interactions
+           * depending on the specified protocol). If you don't specify a protocol string, an empty string
+           * is assumed.
            */
           protocols: {
             type: Array,
@@ -175,6 +172,9 @@ The server should respond:
       constructor() {
         super();
 
+        this.OPEN = 1;
+        this.CLOSED = 3;
+
         this._reconnectAttempts = 0;
         this._lastHeartbeat = null;
 
@@ -201,7 +201,7 @@ The server should respond:
       * Method for sending messages
       */
       send(message) {
-        if(!this.socket || this.readyState !== OPEN) {
+        if(!this.socket || this.readyState !== this.OPEN) {
           console.error(`Error sending message ${message} [readyState: ${this.readyState}]`);
           return;
         }
@@ -216,7 +216,7 @@ The server should respond:
       * Close the current active connection with a defaul closeCode of 1000
       */
       close(closeCode = 1000) {
-        if(!this.socket || this.readyState !== OPEN) {
+        if(!this.socket || this.readyState !== this.OPEN) {
           if(this.verbose) {
             console.warn(`Unable to close WebSocket connection because it is not open`);
           }
@@ -230,7 +230,7 @@ The server should respond:
       * Connect to remote server
       */
       connect() {
-        if(this.socket && this.readyState !== CLOSED) {
+        if(this.socket && this.readyState !== this.CLOSED) {
           if(this.verbose) {
             console.warn(`Unable to connect becuase socket already active`);
           }
@@ -242,7 +242,7 @@ The server should respond:
       /*
       * When connected on url change close connection
       */
-      _handleUrlChange(url) {
+      _handleUrlChange() {
         if(this.socket) {
           this.close();
         }
@@ -317,7 +317,7 @@ The server should respond:
       }
 
       _keepAlive() {
-        if(!this.socket || this.readyState !== OPEN) {
+        if(!this.socket || this.readyState !== this.OPEN) {
           return;
         }
         let now = Date.now();
@@ -371,7 +371,12 @@ The server should respond:
       }
     }
 
-    window.customElements.define(ExmgWebSocket.is, ExmgWebSocket);
-  })();
-  </script>
-</dom-module>
+    window.customElements.define(WebSocketElement.is, WebSocketElement);
+
+    /**
+     * @namespace Exmg
+     */
+    window.Exmg = window.Exmg || {};
+    Exmg.WebSocketElement = WebSocketElement;
+  }
+</script>

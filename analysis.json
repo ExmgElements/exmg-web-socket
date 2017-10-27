@@ -1,8 +1,26 @@
 {
   "schema_version": "1.0.0",
+  "namespaces": [
+    {
+      "name": "Exmg",
+      "description": "",
+      "summary": "",
+      "sourceRange": {
+        "file": "exmg-web-socket.html",
+        "start": {
+          "line": 378,
+          "column": 4
+        },
+        "end": {
+          "line": 378,
+          "column": 36
+        }
+      }
+    }
+  ],
   "elements": [
     {
-      "description": "`exmg-web-socket` Web socket connection element including connection keep alive\n\n### Keep alive\nThe keep alive functionality presumes a ping to be send and a pong returned\nincluding a timestamp as a value. The Format for this is for the send message is:\n```json\n  {\"ping\": 1508493238375}\n```\n\nThe server should respond:\n```json\n  {\"pong\": 1508493238385}\n```",
+      "description": "The `exmg-web-socket` Web socket connection element including connection keep alive\n\n### Keep alive\n\nThe keep alive functionality presumes a ping to be send and a pong returned\nincluding a timestamp as a value. The Format for this is for the send message is:\n\n```json\n  {\"ping\": 1508493238375}\n```\n\n The server should respond:\n```json\n  {\"pong\": 1508493238385}\n```",
       "summary": "",
       "path": "exmg-web-socket.html",
       "properties": [
@@ -772,11 +790,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 48,
+              "line": 44,
               "column": 10
             },
             "end": {
-              "line": 51,
+              "line": 47,
               "column": 11
             }
           },
@@ -792,11 +810,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 55,
+              "line": 51,
               "column": 10
             },
             "end": {
-              "line": 58,
+              "line": 54,
               "column": 11
             }
           },
@@ -812,11 +830,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 62,
+              "line": 58,
               "column": 10
             },
             "end": {
-              "line": 65,
+              "line": 61,
               "column": 11
             }
           },
@@ -832,11 +850,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 69,
+              "line": 65,
               "column": 10
             },
             "end": {
-              "line": 72,
+              "line": 68,
               "column": 11
             }
           },
@@ -852,11 +870,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 77,
+              "line": 73,
               "column": 10
             },
             "end": {
-              "line": 80,
+              "line": 76,
               "column": 11
             }
           },
@@ -872,11 +890,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 84,
+              "line": 80,
               "column": 10
             },
             "end": {
-              "line": 88,
+              "line": 84,
               "column": 11
             }
           },
@@ -890,15 +908,15 @@
         {
           "name": "protocols",
           "type": "Array",
-          "description": "Either a single protocol string or an array of protocol strings. These strings are used to indicate sub-protocols,\nso that a single server can implement multiple WebSocket sub-protocols (for example, you might want one server to\nbe able to handle different types of interactions depending on the specified protocol). If you don't specify a\nprotocol string, an empty string is assumed.",
+          "description": "Either a single protocol string or an array of protocol strings. These strings are used to\nindicate sub-protocols, so that a single server can implement multiple WebSocket sub-protocols\n(for example, you might want one server to be able to handle different types of interactions\ndepending on the specified protocol). If you don't specify a protocol string, an empty string\nis assumed.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 95,
+              "line": 92,
               "column": 10
             },
             "end": {
-              "line": 98,
+              "line": 95,
               "column": 11
             }
           },
@@ -914,11 +932,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 102,
+              "line": 99,
               "column": 10
             },
             "end": {
-              "line": 105,
+              "line": 102,
               "column": 11
             }
           },
@@ -934,11 +952,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 110,
+              "line": 107,
               "column": 10
             },
             "end": {
-              "line": 114,
+              "line": 111,
               "column": 11
             }
           },
@@ -956,11 +974,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 119,
+              "line": 116,
               "column": 10
             },
             "end": {
-              "line": 123,
+              "line": 120,
               "column": 11
             }
           },
@@ -978,11 +996,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 128,
+              "line": 125,
               "column": 10
             },
             "end": {
-              "line": 132,
+              "line": 129,
               "column": 11
             }
           },
@@ -1000,11 +1018,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 136,
+              "line": 133,
               "column": 10
             },
             "end": {
-              "line": 139,
+              "line": 136,
               "column": 11
             }
           },
@@ -1020,11 +1038,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 145,
+              "line": 142,
               "column": 10
             },
             "end": {
-              "line": 148,
+              "line": 145,
               "column": 11
             }
           },
@@ -1040,11 +1058,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 152,
+              "line": 149,
               "column": 10
             },
             "end": {
-              "line": 155,
+              "line": 152,
               "column": 11
             }
           },
@@ -2958,11 +2976,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 167,
+              "line": 164,
               "column": 6
             },
             "end": {
-              "line": 172,
+              "line": 169,
               "column": 7
             }
           },
@@ -3050,11 +3068,7 @@
             }
           },
           "metadata": {},
-          "params": [
-            {
-              "name": "url"
-            }
-          ]
+          "params": []
         },
         {
           "name": "_reconnect",
@@ -4021,7 +4035,7 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 41,
+          "line": 37,
           "column": 4
         },
         "end": {
@@ -4031,18 +4045,18 @@
       },
       "privacy": "public",
       "superclass": "HTMLElement",
-      "name": "ExmgWebSocket",
+      "name": "WebSocketElement",
       "attributes": [
         {
           "name": "auto",
           "description": "Automaticly setup connection on init",
           "sourceRange": {
             "start": {
-              "line": 48,
+              "line": 44,
               "column": 10
             },
             "end": {
-              "line": 51,
+              "line": 47,
               "column": 11
             }
           },
@@ -4054,11 +4068,11 @@
           "description": "Interval in which we reconnect after connection error in ms",
           "sourceRange": {
             "start": {
-              "line": 55,
+              "line": 51,
               "column": 10
             },
             "end": {
-              "line": 58,
+              "line": 54,
               "column": 11
             }
           },
@@ -4070,11 +4084,11 @@
           "description": "the increase rate of the reconnect interval",
           "sourceRange": {
             "start": {
-              "line": 62,
+              "line": 58,
               "column": 10
             },
             "end": {
-              "line": 65,
+              "line": 61,
               "column": 11
             }
           },
@@ -4086,11 +4100,11 @@
           "description": "Max value for reconnect interval in ms",
           "sourceRange": {
             "start": {
-              "line": 69,
+              "line": 65,
               "column": 10
             },
             "end": {
-              "line": 72,
+              "line": 68,
               "column": 11
             }
           },
@@ -4102,11 +4116,11 @@
           "description": "By default, exmg-web-socket events do not bubble. Setting this attribute will cause its\nevents to bubble to the window object.",
           "sourceRange": {
             "start": {
-              "line": 77,
+              "line": 73,
               "column": 10
             },
             "end": {
-              "line": 80,
+              "line": 76,
               "column": 11
             }
           },
@@ -4118,11 +4132,11 @@
           "description": "The URL to which to connect; this should be the URL to which the WebSocket server will respond.",
           "sourceRange": {
             "start": {
-              "line": 84,
+              "line": 80,
               "column": 10
             },
             "end": {
-              "line": 88,
+              "line": 84,
               "column": 11
             }
           },
@@ -4131,14 +4145,14 @@
         },
         {
           "name": "protocols",
-          "description": "Either a single protocol string or an array of protocol strings. These strings are used to indicate sub-protocols,\nso that a single server can implement multiple WebSocket sub-protocols (for example, you might want one server to\nbe able to handle different types of interactions depending on the specified protocol). If you don't specify a\nprotocol string, an empty string is assumed.",
+          "description": "Either a single protocol string or an array of protocol strings. These strings are used to\nindicate sub-protocols, so that a single server can implement multiple WebSocket sub-protocols\n(for example, you might want one server to be able to handle different types of interactions\ndepending on the specified protocol). If you don't specify a protocol string, an empty string\nis assumed.",
           "sourceRange": {
             "start": {
-              "line": 95,
+              "line": 92,
               "column": 10
             },
             "end": {
-              "line": 98,
+              "line": 95,
               "column": 11
             }
           },
@@ -4150,11 +4164,11 @@
           "description": "Specifies the format in which the data is send.",
           "sourceRange": {
             "start": {
-              "line": 102,
+              "line": 99,
               "column": 10
             },
             "end": {
-              "line": 105,
+              "line": 102,
               "column": 11
             }
           },
@@ -4166,11 +4180,11 @@
           "description": "The most recent request made by this web-socket element.",
           "sourceRange": {
             "start": {
-              "line": 110,
+              "line": 107,
               "column": 10
             },
             "end": {
-              "line": 114,
+              "line": 111,
               "column": 11
             }
           },
@@ -4182,11 +4196,11 @@
           "description": "The most recent response received by this web-socket element.",
           "sourceRange": {
             "start": {
-              "line": 119,
+              "line": 116,
               "column": 10
             },
             "end": {
-              "line": 123,
+              "line": 120,
               "column": 11
             }
           },
@@ -4198,11 +4212,11 @@
           "description": "The most recent error received by this web-socket element. If any error occurred.",
           "sourceRange": {
             "start": {
-              "line": 128,
+              "line": 125,
               "column": 10
             },
             "end": {
-              "line": 132,
+              "line": 129,
               "column": 11
             }
           },
@@ -4214,11 +4228,11 @@
           "description": "Enables verbose mode",
           "sourceRange": {
             "start": {
-              "line": 136,
+              "line": 133,
               "column": 10
             },
             "end": {
-              "line": 139,
+              "line": 136,
               "column": 11
             }
           },
@@ -4230,11 +4244,11 @@
           "description": "Sends Ping to server to keep server connection alive. Send data structur is:\nSend: { \"ping\": 1506519980068 } -> Result: {\"pong\":1506519980088}",
           "sourceRange": {
             "start": {
-              "line": 145,
+              "line": 142,
               "column": 10
             },
             "end": {
-              "line": 148,
+              "line": 145,
               "column": 11
             }
           },
@@ -4246,11 +4260,11 @@
           "description": "Server Ping interval in ms",
           "sourceRange": {
             "start": {
-              "line": 152,
+              "line": 149,
               "column": 10
             },
             "end": {
-              "line": 155,
+              "line": 152,
               "column": 11
             }
           },
