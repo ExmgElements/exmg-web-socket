@@ -15,7 +15,8 @@
   "author": "Ex Machina",
   "devDependencies": {
     "bower": "latest",
-    "eslint": "^4.0.0",
+    "eslint": "^4.11.0",
+    "eslint-config-exmg": "latest",
     "eslint-plugin-html": "^3.0.0",
     "polymer-cli": "^1.2.0"
   },

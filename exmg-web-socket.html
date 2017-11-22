@@ -36,7 +36,9 @@
      * @demo demo/index.html
      */
     class WebSocketElement extends Polymer.Element {
-      static get is() { return 'exmg-web-socket'; }
+      static get is() {
+        return 'exmg-web-socket';
+      }
       static get properties() {
         return {
           /**
@@ -201,12 +203,12 @@
       * Method for sending messages
       */
       send(message) {
-        if(!this.socket || this.readyState !== this.OPEN) {
+        if (!this.socket || this.readyState !== this.OPEN) {
           console.error(`Error sending message ${message} [readyState: ${this.readyState}]`);
           return;
         }
 
-        if(this.verbose) {
+        if (this.verbose) {
           console.info(`Sending message: ${message}`);
         }
         this._socket.send(message);
@@ -216,8 +218,8 @@
       * Close the current active connection with a defaul closeCode of 1000
       */
       close(closeCode = 1000) {
-        if(!this.socket || this.readyState !== this.OPEN) {
-          if(this.verbose) {
+        if (!this.socket || this.readyState !== this.OPEN) {
+          if (this.verbose) {
             console.warn(`Unable to close WebSocket connection because it is not open`);
           }
           return;
@@ -230,8 +232,8 @@
       * Connect to remote server
       */
       connect() {
-        if(this.socket && this.readyState !== this.CLOSED) {
-          if(this.verbose) {
+        if (this.socket && this.readyState !== this.CLOSED) {
+          if (this.verbose) {
             console.warn(`Unable to connect becuase socket already active`);
           }
           return;
@@ -243,18 +245,18 @@
       * When connected on url change close connection
       */
       _handleUrlChange() {
-        if(this.socket) {
+        if (this.socket) {
           this.close();
         }
       }
 
       _reconnect() {
-        let timeout = Math.round(this.autoReconnectInterval * Math.pow(this.reconnectDecay, this._reconnectAttempts));
-        if(this.verbose) {
+        const timeout = Math.round(this.autoReconnectInterval * Math.pow(this.reconnectDecay, this._reconnectAttempts));
+        if (this.verbose) {
           console.info(`Connection retry in ${timeout}ms`);
         }
         setTimeout(() => {
-          if(this.verbose) {
+          if (this.verbose) {
             console.info('reconnecting...');
           }
           this._reconnectAttempts++;
@@ -278,7 +280,7 @@
         this._setLastResponse(null);
         this.fire('close');
 
-        if(!this._forceClose) {
+        if (!this._forceClose) {
           this._reconnect();
         }
       }
@@ -290,11 +292,11 @@
       }
 
       _onMessage(e) {
-        let data = e.data;
+        const data = e.data;
         if (this.verbose) {
           console.info(`Message received`, e.data);
         }
-        if(isJSON(data) && JSON.parse(e.data).hasOwnProperty('pong')) {
+        if (isJSON(data) && JSON.parse(e.data).hasOwnProperty('pong')) {
           if (this.verbose) {
             console.info(`Pong received`);
           }
@@ -310,18 +312,18 @@
           console.info(`Connection open received [readyState: ${this.readyState}]`);
         }
         this._reconnectAttempts = 0;
-        if(this.keepAlive) {
+        if (this.keepAlive) {
           this._keepAliveTimer = setInterval(this._keepAlive.bind(this), this.keepAliveInterval);
         }
         this.fire('open', {url: this.url, e: e});
       }
 
       _keepAlive() {
-        if(!this.socket || this.readyState !== this.OPEN) {
+        if (!this.socket || this.readyState !== this.OPEN) {
           return;
         }
-        let now = Date.now();
-        if(this._lastHeartbeat && now - this._lastHeartbeat > 10000) {
+        const now = Date.now();
+        if (this._lastHeartbeat && now - this._lastHeartbeat > 10000) {
           if (this.verbose) {
             console.error('Connection timout');
             this._setLastError('Connection timout');
@@ -336,7 +338,7 @@
         if (this.verbose) {
           console.info(`Initialize WebSocket [url: ${this.url} / protocols: ${this.protocols}]`);
         }
-        if(!this.url) {
+        if (!this.url) {
           console.error(`Please provide a valid WebSocket url ${this.url}`);
           return;
         }
@@ -362,7 +364,7 @@
       }
 
       _removeSocketListeners() {
-        if(this._socket) {
+        if (this._socket) {
           this._socket.removeEventListener('error', this._boundOnError);
           this._socket.removeEventListener('close', this._boundOnClose);
           this._socket.removeEventListener('message', this._boundOnMessage);

@@ -161,7 +161,7 @@
                 type: Boolean,
                 value: true,
               },
-              keepAlive:  {
+              keepAlive: {
                 type: Boolean,
                 value: true,
               },
@@ -193,7 +193,7 @@
             this.$.socket.connect();
           }
           _addLog(d) {
-            let date = new Intl.DateTimeFormat('en-AU', {
+            const date = new Intl.DateTimeFormat('en-US', {
               hour: 'numeric', minute: 'numeric', second: 'numeric',
             }).format();
             this.push('history', {date: date, data: d});
