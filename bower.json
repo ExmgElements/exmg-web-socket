@@ -5,11 +5,17 @@
   "authors": [
     "Ex Machina Group"
   ],
+  "homepage": "http://exmg.github.io/ExmgElements/exmg-web-socket/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ExmgElements/exmg-web-socket.git"
+  },
   "keywords": [
     "web-components",
     "polymer",
     "websocket"
   ],
+  "license": "MIT License",
   "main": "exmg-web-socket.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
