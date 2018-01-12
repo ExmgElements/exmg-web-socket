@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <title>exmg-web-socket</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../exmg-web-socket.html">
+
+</head>
+<body>
+  <test-fixture id="BasicConnect">
+    <template>
+      <exmg-web-socket url="ws://localhost:8080"></exmg-web-socket>
+    </template>
+  </test-fixture>
+  <test-fixture id="AutoConnect">
+    <template>
+      <exmg-web-socket url="ws://localhost:8080" auto></exmg-web-socket>
+    </template>
+  </test-fixture>
+  <script type="module">
+
+    import { Server } from '../node_modules/mock-socket/dist/mock-socket.es.js';
+
+    suite('<exmg-web-socket>', _ => {
+
+      suite('basic usage', _ => {
+        test('Test connection keep alive ping/pong', function(done) {
+
+          const socketElement = fixture('BasicConnect');
+          const mockServer = new Server('ws://localhost:8080');
+          socketElement.keepAlive = true;
+          socketElement.keepAliveInterval = 500;
+          socketElement.connect();
+
+          let aliveCount = 0;
+
+          mockServer.on('message', (server) => {
+            const request = JSON.parse(server);
+            if(JSON.parse(server).hasOwnProperty('ping')) {
+              mockServer.send(`{"pong": ${Date.now()}}`);
+              socketElement.keepAlive = false;
+              aliveCount++;
+            }
+          });
+
+          setTimeout(() => {
+            expect(aliveCount).to.be.equal(1);
+            mockServer.stop(done);
+          }, 1000);
+
+        });
+
+        test('Test auto connection', function(done) {
+
+          const mockServer = new Server('ws://localhost:8080');
+          const socketEl = fixture('AutoConnect');
+
+          mockServer.on('connection', (server) => {
+            mockServer.stop(done);
+          });
+
+        });
+
+      });
+
+    });
+  </script>
+
+</body>
+</html>
