@@ -15,7 +15,6 @@ before_script:
 - eslint . --ext js,html --ignore-path .gitignore
 
 addons:
-  firefox: latest
   apt:
     sources:
       - google-chrome
