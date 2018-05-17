@@ -1,30 +1,47 @@
 {
-  "name": "exmg-web-socket",
-  "private": true,
+  "name": "@exmg/exmg-web-socket",
+  "flat": true,
+  "version": "3.0.0",
   "description": "Web Sockets Element",
-  "main": "exmg-web-socket.html",
-  "repository": "ExmgElements/exmg-web-socket",
-  "keywords": [
-    "Exmg",
-    "ExmgElements",
-    "exmg-web-socket",
-    "web-components",
-    "web-component",
-    "polymer"
+  "contributors": [
+    "Ex Machina Group"
   ],
-  "author": "Ex Machina",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "websocket"
+  ],
+  "main": "exmg-web-socket.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ExmgElements/exmg-web-socket.git"
+  },
+  "license": "MIT License",
+  "homepage": "http://exmg.github.io/ExmgElements/exmg-web-socket/",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0-pre.1"
+  },
   "devDependencies": {
-    "bower": "latest",
+    "@polymer/iron-component-page": "^3.0.0-pre.19",
+    "@polymer/iron-input": "^3.0.0-pre.19",
+    "@polymer/paper-checkbox": "^3.0.0-pre.19",
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
+    "@webcomponents/webcomponentsjs": "^2.0.0-beta.2",
     "eslint": "^4.11.0",
     "eslint-config-exmg": "latest",
     "eslint-plugin-html": "^3.0.0",
-    "polymer-cli": "^1.2.0",
-    "mock-socket": "^7.1.0"
+    "wct-browser-legacy": "^1.0.0"
   },
-  "homepage": "https://github.com/ExmgElements/",
+  "resolutions": {
+    "@webcomponents/webcomponentsjs": "2.0.0",
+    "type-detect": "1.0.0",
+    "supports-color": "3.1.2",
+    "inherits": "2.0.3",
+    "samsam": "1.1.2"
+  },
   "scripts": {
-    "lint": "polymer lint --rules polymer-2 --input *.html",
+    "lint": "polymer lint --rules polymer-3 --input *.js",
     "eslint": "eslint . --ext js,html --ignore-path .gitignore",
-    "analyze": "polymer analyze --input exmg-web-socket.html > analysis.json"
+    "analyze": "polymer analyze --input exmg-web-socket.js > analysis.json"
   }
 }

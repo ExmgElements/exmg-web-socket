@@ -11,7 +11,7 @@ install:
 - bower install
 
 before_script:
-- polymer lint --rules polymer-2 --input *.html
+- polymer lint --rules polymer-3 --input *.html
 - eslint . --ext js,html --ignore-path .gitignore
 
 addons:
