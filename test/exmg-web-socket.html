@@ -3,10 +3,9 @@
 <head>
   <title>exmg-web-socket</title>
 
-  <script src="@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="web-component-tester/browser.js"></script>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="../node_modules/wct-browser-legacy/browser.js"></script>
 
-  <script type="module" src="@polymer/polymer/polymer.js"></script>
   <script type="module" src="../exmg-web-socket.js"></script>
 
 </head>
@@ -34,17 +33,21 @@
           const mockServer = new Server('ws://localhost:8080');
           socketElement.keepAlive = true;
           socketElement.keepAliveInterval = 500;
+         
           socketElement.connect();
 
           let aliveCount = 0;
 
-          mockServer.on('message', (server) => {
-            const request = JSON.parse(server);
-            if(JSON.parse(server).hasOwnProperty('ping')) {
-              mockServer.send(`{"pong": ${Date.now()}}`);
-              socketElement.keepAlive = false;
-              aliveCount++;
-            }
+          mockServer.on('connection', socket => {
+            socket.on('message', (server) => {
+              const request = JSON.parse(server);
+              if(JSON.parse(server).hasOwnProperty('ping')) {
+                socket.send(`{"pong": ${Date.now()}}`);
+                socketElement.keepAlive = false;
+                aliveCount++;
+              }
+            });
+    
           });
 
           setTimeout(() => {
